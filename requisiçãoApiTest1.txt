@@ -1,0 +1,25 @@
+*requisição api, criação de arquivo .html, retorno de erro caso url esteja invalida
+
+'use strict';
+
+const http = require('http');
+const fs = require('fs')
+
+http.get('http://loripsum.net/api/1', (res) => {
+    let text = '';
+
+    res.on('data', (chunk) => {
+        text += chunk;
+    });
+
+    res.on('end', () => {
+        fs.writeFile('lorem.html', text, () => {
+            console.log('Arquivo Pronto!');
+
+        });
+    });
+})
+
+.on('error', (e) => {
+    console.log('Got Error: ' + e.message);
+});
